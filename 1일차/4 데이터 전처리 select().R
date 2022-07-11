@@ -31,4 +31,3 @@ data1 %>%
   table()
 
 print("2022.07.12")
-print("수정")

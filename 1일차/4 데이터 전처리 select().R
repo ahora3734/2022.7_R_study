@@ -29,3 +29,5 @@ data1 %>%
 data1 %>% 
   select(성별, 연령) %>%
   table()
+
+print("2022.07.12")

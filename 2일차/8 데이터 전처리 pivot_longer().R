@@ -57,18 +57,56 @@ data1 %>%
   select(성별, 모두랑맛:모두랑재방문) %>% 
   group_by(성별) %>% 
   describe()
-  
+
+data1 %>% 
+  select(성별, 구분, 모두랑맛:모두랑재방문) %>% 
+  group_by(성별, 구분) %>% 
+  describe()
+
+data1 %>% 
+  select(성별, 구분, 모두랑맛:모두랑재방문) %>% 
+  group_by(성별, 구분) %>% 
+  describe() %>%
+  select(구분, 성별, described_variables, mean, sd)
 
 #### 8. pivot_longer ####
+install.packages("ggpubr")
 library(ggpubr)
 data1 %>% 
   select(모두랑맛:모두랑재방문) %>% 
-  pivot_longer(1:5) %>% 
+  pivot_longer(1:5) %>%  #세로로 길게 (longer) 데이터를 변경
   ggbarplot(x="name", y="value", add="mean", fill="name", 
-            legend="none", label=T, lab.nb.digits = 1)
+            legend="none", label=T, lab.nb.digits = 1) # 그래프를 그림 
+  #fill="name" X축으로 사용하는 'name' 별로 색을 다르게 해라
+  #legend(범례), label=T (true), lab.nb.digits = 1 소숫점 첫째자리까지
+  #R 스튜디오에서는 창 크기 조절할때 그래프 크기도 자동으로 조절됨.
+  
+?ggbarplot #파라미터 확인할 수 있음.
+
+data1 %>% 
+  select(모두랑맛:모두랑재방문) %>% 
+  pivot_longer(1:5) %>%  #세로로 길게 (longer) 데이터를 변경
+  ggbarplot(x="name", y="value", add="mean") 
+
+data1 %>% 
+  select(모두랑맛:모두랑재방문) %>% 
+  pivot_longer(모두랑맛:모두랑재방문) %>%  #(1:5)와 같음
+  ggbarplot(x="name", y="value", add="mean") 
   
 data1 %>% 
   select(구분, 모두랑맛:모두랑재방문) %>% 
-  pivot_longer(-구분) %>% 
+  pivot_longer(-구분) %>%  #구분을 뺀 나머지(모두랑맛:모두랑재방문)를 longer
   ggbarplot(x="name", y="value", add="mean", fill="구분", label=T, lab.nb.digits = 1,
             position=position_dodge2())
+
+data1 %>% 
+  select(구분, 모두랑맛:모두랑재방문) %>% 
+  pivot_longer(-구분) %>%  
+  ggbarplot(x="name", y="value", add="mean", fill="구분", label=T, lab.nb.digits = 1)
+  #position=position_dodge2()를 빼면..
+
+data1 %>% 
+  select(모두랑맛:모두랑재방문) %>% 
+  pivot_longer(1:5, names_to="변수") %>% 
+  ggbarplot(x="변수", y="value", add="mean", fill="변수",  legend="none", 
+  label=T, lab.nb.digits = 1)

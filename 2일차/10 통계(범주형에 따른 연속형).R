@@ -27,5 +27,5 @@ data1 %>% ggbetweenstats(연령, 선호도)
 # omegasq : small(0.01<=omega<0.25), medium(0.25<=omega<0.4), large(0.4<=omega)
 # 에타제곱은 표본수가 작거나 독립변수의 그룹이 많은 경우 편향되는 경향이 있어서 이를 보완한 오메가제곱이 더 좋다.
 
-data2 <- read_excel("data.xlsx", 2)
+data2 <- read_excel("1일차\\data.xlsx", 2) #2번째 sheet
 data2 %>% pivot_longer(2:3) %>% ggwithinstats(name, value)

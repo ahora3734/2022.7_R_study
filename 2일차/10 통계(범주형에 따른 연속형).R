@@ -26,6 +26,9 @@ data1 %>% ggbetweenstats(성별, 선호도)
 data1 %>% ggbetweenstats(연령, 선호도)
 # omegasq : small(0.01<=omega<0.25), medium(0.25<=omega<0.4), large(0.4<=omega)
 # 에타제곱은 표본수가 작거나 독립변수의 그룹이 많은 경우 편향되는 경향이 있어서 이를 보완한 오메가제곱이 더 좋다.
+# (사후분석)20~22와 27~ 사이의 p값이 통계적으로 유의하여 그래프에 나오지만. 통계적 유의하지 않은 그룹간의 p값은 나오지 않음.
+# (사후문석)R에서도 사후분석 방법을 선택하여 수행할 수 있다(강사님). 
+# 그러나 지금 실행된 사후검사방법이 무엇인지 설명 없었으며, 강사님은 R에서 자동으로 구해주는 사후검사를 신뢰하는 의견임.
 
 data2 <- read_excel("1일차\\data.xlsx", 2) #2번째 sheet
 data2 %>% pivot_longer(2:3) %>% ggwithinstats(name, value)

@@ -17,3 +17,14 @@ data1 %>%
 # k=3 small(0.07<=v<0.2), Medium(0.2<=V<0.35), large(0.35<=V)
 # k=4 small(0.06<=v<0.17), Medium(0.17<=V<0.29), large(0.39<=V)
 
+data1 %>% 
+  select(성별, 구분) %>% 
+  table() %>% 
+  data.frame() %>% 
+  ggpiestats(성별, 구분, Freq)
+
+data1 %>% 
+  select(성별, 구분) %>% 
+  table() %>% 
+  data.frame() %>% 
+  ggpiestats(구분, 성별, Freq)

@@ -32,3 +32,45 @@ data1 %>% ggbetweenstats(연령, 선호도)
 
 data2 <- read_excel("1일차\\data.xlsx", 2) #2번째 sheet
 data2 %>% pivot_longer(2:3) %>% ggwithinstats(name, value)
+
+#### 다. 연속형에 따른 연속형 ####
+#모두랑맛, 모두랑재방문 -> 맛있는것과 재방문 사이의 관련성
+data1 %>% ggscatterstats(모두랑맛, 모두랑재방문)
+
+#상관관계 분석  correlation analysis
+library(tidyverse)                  
+# 데이터 전처리를 쉽게 할 수 있는 패키지 로딩
+# select 사용하려면 필요
+data1 %>% select(모두랑맛:모두랑재방문) %>% ggcorrmat()
+
+#청년다방에 재방문에 영향을 주는 가장 높은 요인은?
+data1 %>% select(청년다방맛:청년다방재방문) %>% ggcorrmat()
+#ggcorrmat()는 결측값도 알아서 처리해줌.
+
+#보통 시중 교재에서는 상관을 cor()
+data1 %>% select(청년다방맛:청년다방재방문) %>%
+ na.omit() %>% cor() #na.omit() 결측값이 있으면 사례를 제거함
+
+#### 라. 회귀분석 ####
+data1 %>%
+  select(성별, 선호도) %>%
+  lm(선호도~성별, .) %>% #선형회귀 종속변수~독립변수
+  summary()
+  #(결과) "성별여"라고 나옴. 남자를 통제하였기 때문에
+  #(해석)남자에 비해 여자들은~~ Estimate(계수)가 양수이면 (떡볶이를) 더 좋아함. 
+  #Adjusted R-Squared: 설명력, 1이면 100%, 성별을 가지고 선호도를 맞추는데 9.2% 맞출 수 있다.
+
+data1 %>%
+  select(연령, 선호도) %>%
+  lm(선호도~연령, .) %>% #선형회귀 종속변수~독립변수
+  summary()
+
+data1 %>%
+  select(모두랑맛:모두랑재방문) %>%
+  lm(모두랑재방문~모두랑맛+모두랑가격+모두랑친절+모두랑청결, .) %>% #선형회귀 종속변수~독립변수
+  summary()
+
+data1 %>%
+  select(모두랑맛:모두랑재방문) %>%
+  lm(모두랑재방문~., .) %>% #첫번째 . 은 종속변수 빼고 나머지가 다 독립변수라는 뜻
+  summary()

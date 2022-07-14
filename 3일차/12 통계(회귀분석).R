@@ -74,3 +74,17 @@ data1 %>%
   select(모두랑맛:모두랑재방문) %>%
   lm(모두랑재방문~., .) %>% #첫번째 . 은 종속변수 빼고 나머지가 다 독립변수라는 뜻
   summary()
+
+  #산포도 및 회귀선 그리는 법
+ ggplot(data=data1, aes(x=모두랑맛, y=모두랑재방문)) +
+  geom_point() +
+  geom_smooth(method = 'lm')
+
+data1 %>%
+  select(모두랑맛:모두랑재방문) %>%
+  lm(모두랑재방문~., .) %>% #첫번째 . 은 종속변수 빼고 나머지가 다 독립변수라는 뜻
+  ggcoefstats() #점선닿아 있으면 통계적으로 의미 없음. 점선 오른쪽이 +, 왼쪽이 - 
+
+data3 <- read_excel("1일차\\data.xlsx", 3)
+
+data3 %>% lm(역량향상~., .) %>% ggcoefstats()
